@@ -1,0 +1,47 @@
+body {
+    font-family: Avenir, Helvetica, sans-serif;
+    background: #f09433;
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+    color: white;
+}
+
+button {
+    border: 0;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#display {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+#displayTags {
+    font-size: 25px;
+    margin-left: 50px;
+    width: 50vw;
+}
+
+#displayImageContainer {
+    width: 50%;
+    height: 100vh;
+    width: 50vw;
+}
+
+#displayImageContainer > #displayImage {
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+}
