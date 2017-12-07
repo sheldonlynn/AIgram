@@ -19,6 +19,7 @@ if (isset($_POST['submit-button'])) {
 
 <html>
 <head>
+    <title>aigram</title>
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -41,19 +42,22 @@ if (isset($_POST['submit-button'])) {
         aigram
     </h1>
     <div id="caption">
-        Harness the power of Artificial Intelligence to caption your photos.
+        harness the power of artificial intelligence to caption your photos.
     </div>
     <img src="instagram-logo.png" id="logo"/>
     <div id="imageContainer">
         <img src="ripple.svg" id="spinner" />
         <div id="displayImage">
         </div>
-        <div id="displayTags">
+        <div id="displayContainer">
+            <div id="displayTags">
+            </div>
+            <label id="reset" onClick="reset()">again</label>
         </div>
     </div>
     <div id="upload">
         <form name="submit-photo" id="submit-photo" method="post" action="index.php" enctype="multipart/form-data">
-            <label id="selectFile"> Upload Image
+            <label id="selectFile"> upload Image
                 <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
             </label>
             <input type="hidden" name="submit-button" id="submit-button" value="submit-button" />
@@ -63,6 +67,10 @@ if (isset($_POST['submit-button'])) {
 <script>
     var data = <?php echo (isset($data) && strlen($data) > 0) ? json_encode($data) : "null" ?>;
     var path = <?php echo (isset($path) && strlen($path) > 0) ? json_encode($path) : "null" ?>;
+
+    function reset() {
+        $(location).attr('href', window.location.href);
+    }
 
     if (data) {
         var apiKey = 'AIzaSyDpM70NiH2mfIa2jMx2G9JHmJXjx2UUAxw';
@@ -106,7 +114,9 @@ if (isset($_POST['submit-button'])) {
             success: function(data, textStatus, jqXHR) {
                 _.map(data.responses[0].labelAnnotations, function(label) {
                    $('#displayTags').append("#" + label.description.replace(/ /g,'') + " ");
+                   $('#displayContainer').css("display", "flex");
                    $('#displayTags').fadeIn("slow");
+                   $('#reset').fadeIn("slow");
                    $('#displayImage').css("opacity", "1");
                    $('#spinner').hide();
                 });

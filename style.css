@@ -47,11 +47,16 @@ button {
 }
 
 #displayTags {
-    display: none;
     font-size: 1.5em;
     text-align: center;
     padding: 2em;
     max-width: 45vw;
+}
+
+#displayContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #imageContainer {
@@ -90,6 +95,10 @@ label{
     display: table;
     color: #fff;
     border: 3px solid white;
+}
+
+#reset {
+    display: none;
 }
 
 label:hover {
