@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit-button'])) {
     $file = $_FILES["fileToUpload"]["tmp_name"];
 
     $path = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
@@ -24,31 +24,40 @@ if (isset($_POST['submit'])) {
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+<!--    <link rel="stylesheet" href="reset.css" type="text/css">-->
     <link rel="stylesheet" href="style.css" type="text/css">
+    <script>
+        $(document).ready(function() {
+            $('#fileToUpload').change(function() {
+                $('#submit-photo').submit();
+                $('displayImage').hide();
+            });
+        });
+    </script>
 </head>
 <body>
 <div id="content">
     <h1>
-        AIgram
+        aigram
     </h1>
-    <div id="upload">
-        <div id="caption">
-            Harness the power of Artificial Intelligence to caption your photos.
-        </div>
-        <form name="submit-pho" id="submit-photo" method="post" action="index.php" enctype="multipart/form-data">
-            <label id="selectFile">
-                <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
-            </label>
-            <input type="submit" value="Get Tags!" name="submit">
-        </form>
+    <div id="caption">
+        Harness the power of Artificial Intelligence to caption your photos.
     </div>
-    <div id="display">
-        <div id="displayImageContainer">
-            <img id="displayImage" src=" " />
+    <img src="instagram-logo.png" id="logo"/>
+    <div id="imageContainer">
+        <img src="ripple.svg" id="spinner" />
+        <div id="displayImage">
         </div>
         <div id="displayTags">
         </div>
-
+    </div>
+    <div id="upload">
+        <form name="submit-photo" id="submit-photo" method="post" action="index.php" enctype="multipart/form-data">
+            <label id="selectFile"> Upload Image
+                <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
+            </label>
+            <input type="hidden" name="submit-button" id="submit-button" value="submit-button" />
+        </form>
     </div>
 </div>
 <script>
@@ -73,23 +82,34 @@ if (isset($_POST['submit'])) {
             ]
         };
 
+        $('#upload').hide();
+
+        $('#logo').hide();
+
         //set imageSource
-        $('#displayImage').attr("src", 'data:img/' + path + ';base64,' + data);
+        $('#displayImage').css("background-image", "url('data:img/" + path + ";base64," + data + "')");
+
+        $('#imageContainer').css("display", "flex");
+        $('#displayImage').css("opacity", "0.5");
+        $('#spinner').show();
+//        $('displayImageContainer').fadeIn('slow');
 
         $.ajax({
             type: 'POST',
             url: 'https://vision.googleapis.com/v1/images:annotate?key=' + apiKey,
+            async : true,
             dataType: 'json',
             data: JSON.stringify(request),
             headers: {
                 "Content-Type": "application/json"
             },
             success: function(data, textStatus, jqXHR) {
-//                console.log(data, "data");
                 _.map(data.responses[0].labelAnnotations, function(label) {
                    $('#displayTags').append("#" + label.description.replace(/ /g,'') + " ");
+                   $('#displayTags').fadeIn("slow");
+                   $('#displayImage').css("opacity", "1");
+                   $('#spinner').hide();
                 });
-//                $('#displayTags').text(JSON.stringify(data));
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('Errors: ' + textStatus + ' ' + errorThrown);

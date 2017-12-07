@@ -1,11 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
 body {
-    font-family: Avenir, Helvetica, sans-serif;
+    font-family: "Century Gothic", Avenir, Helvetica, sans-serif;
     background: #f09433;
     background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
     background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
     color: white;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 4em;
+    font-family: "Century Gothic", Avenir, Helvetica, sans-serif;
+
 }
 
 button {
@@ -17,31 +31,75 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 2em;
+}
+
+#caption {
+    font-size: 1em;
+    margin-bottom: 2em;
 }
 
 #display {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    margin-top: 2em;
 }
 
 #displayTags {
-    font-size: 25px;
-    margin-left: 50px;
-    width: 50vw;
+    display: none;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 2em;
+    max-width: 45vw;
 }
 
-#displayImageContainer {
-    width: 50%;
-    height: 100vh;
-    width: 50vw;
+#imageContainer {
+    display: none;
+    height: 75vh;
+    width: 100vw;
+    flex-direction: row;
+    align-items: center;
 }
 
-#displayImageContainer > #displayImage {
+#displayImage {
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 500ms;
+    width: 75vw;
+}
+
+#logo {
+    width: 60vh;
     height: auto;
-    width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    min-width: 0;
-    min-height: 0;
+}
+
+#spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+label{
+    padding: 10px;
+    background: 0;
+    display: table;
+    color: #fff;
+    border: 3px solid white;
+}
+
+label:hover {
+    background: rgba(255,255,255, 0.5);
+}
+
+label:click {
+    background: rgba(255,255,255, 0.5);
+}
+
+input[type="file"] {
+    display: none;
 }
