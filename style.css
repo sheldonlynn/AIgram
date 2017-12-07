@@ -47,16 +47,25 @@ button {
 }
 
 #displayTags {
-    font-size: 1.5em;
-    text-align: center;
-    padding: 2em;
+    display: none;
+    font-size: 1em;
+    text-align: left;
     max-width: 45vw;
+    margin-bottom: 25px;
+}
+
+#displayQuote {
+    font-size: 1em;
+    display: none;
 }
 
 #displayContainer {
-    display: flex;
+    display: none;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    padding-right: 25px;
+    padding-left: 15px;
+    max-width: 50vw;
 }
 
 #imageContainer {
@@ -67,12 +76,16 @@ button {
     align-items: center;
 }
 
+#displaySeparator {
+    display: none;
+}
+
 #displayImage {
     height: 100%;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transition: opacity 500ms;
+    transition: opacity 1000ms;
     width: 75vw;
 }
 

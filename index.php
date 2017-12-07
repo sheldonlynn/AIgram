@@ -50,6 +50,13 @@ if (isset($_POST['submit-button'])) {
         <div id="displayImage">
         </div>
         <div id="displayContainer">
+            <div id="displayQuote">
+            </div>
+            <div id="displaySeparator">
+                _________________________________
+                <br>
+                <br>
+            </div>
             <div id="displayTags">
             </div>
             <label id="reset" onClick="reset()">again</label>
@@ -70,6 +77,31 @@ if (isset($_POST['submit-button'])) {
 
     function reset() {
         $(location).attr('href', window.location.href);
+    }
+
+    function getQuote() {
+        $.ajax({
+            url: "https://api.forismatic.com/api/1.0/",
+            jsonp: "jsonp",
+            dataType: "jsonp",
+            async: true,
+            data: {
+                method: "getQuote",
+                lang: "en",
+                format: "jsonp"
+            },
+            success: function(data, textStatus, jqXHR) {
+                console.log(data, "quote");
+                var quote = '"' + data.quoteText + '"';
+                if (data.quoteAuthor.length > 0) {
+                    quote = quote + " - " + data.quoteAuthor;
+                }
+                $('#displayQuote').text(quote);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Errors: ' + textStatus + ' ' + errorThrown);
+            }
+        })
     }
 
     if (data) {
@@ -94,13 +126,19 @@ if (isset($_POST['submit-button'])) {
 
         $('#logo').hide();
 
+        $('#displayImage').css("display", "none");
+
         //set imageSource
         $('#displayImage').css("background-image", "url('data:img/" + path + ";base64," + data + "')");
+
+        $('#displayImage').fadeIn("slow");
 
         $('#imageContainer').css("display", "flex");
         $('#displayImage').css("opacity", "0.5");
         $('#spinner').show();
 //        $('displayImageContainer').fadeIn('slow');
+
+        getQuote();
 
         $.ajax({
             type: 'POST',
@@ -116,6 +154,8 @@ if (isset($_POST['submit-button'])) {
                    $('#displayTags').append("#" + label.description.replace(/ /g,'') + " ");
                    $('#displayContainer').css("display", "flex");
                    $('#displayTags').fadeIn("slow");
+                   $('#displayQuote').fadeIn("slow");
+                   $('#displaySeparator').fadeIn("slow");
                    $('#reset').fadeIn("slow");
                    $('#displayImage').css("opacity", "1");
                    $('#spinner').hide();
