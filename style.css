@@ -66,6 +66,7 @@ button {
     padding-right: 25px;
     padding-left: 15px;
     max-width: 50vw;
+    text-align: left;
 }
 
 #imageContainer {
